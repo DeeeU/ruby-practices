@@ -1,8 +1,8 @@
-scores = gets.split(',').freeze
+scores = gets.split(',')
 
 shots = []
 scores.each do |s|
-  if ['X', 'X\n', 'X \n'].include? s
+  if ["X", "X\n", "X \n"].include? s
     shots << 10
     shots << 0
   else
