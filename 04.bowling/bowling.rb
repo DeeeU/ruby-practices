@@ -41,5 +41,6 @@ total = 0
   end
 end
 
-total += frames[9..].flatten.inject(:+)
-p total
+# total += frames[9..].flatten.inject(:+)
+# p total
+p [total, frames[9..].flatten].flatten.sum
