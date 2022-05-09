@@ -4,7 +4,7 @@ scores = gets.split(',')
 
 shots = []
 scores.each do |s|
-  if ["X", "X\n", "X \n"].include? s
+  if s.strip == 'X'
     shots << 10
     shots << 0
   else
@@ -20,18 +20,18 @@ total = 0
 9.times do |i|
   if i == 8 && frames[i][0] == 10
     total += frames[i][0] + frames[i][1]
-    if frames[i + 1][0] != 10
-      total += frames[i + 1][0] + frames[i + 1][1]
-    else
-      total += frames[i + 1][0] + frames[i + 2][0]
-    end
+    total += if frames[i + 1][0] != 10
+               frames[i + 1][0] + frames[i + 1][1]
+             else
+               frames[i + 1][0] + frames[i + 2][0]
+             end
   elsif frames[i][0] == 10
     total += frames[i][0] + frames[i][1]
-    if frames[i + 1][0] == 10
-      total += frames[i + 1][0] + frames[i + 2][0]
-    else
-      total += frames[i + 1][0] + frames[i + 1][1]
-    end
+    total += if frames[i + 1][0] == 10
+               frames[i + 1][0] + frames[i + 2][0]
+             else
+               frames[i + 1][0] + frames[i + 1][1]
+             end
 
   elsif frames[i][0] + frames[i][1] == 10
     total += frames[i][0] + frames[i][1] + frames[i + 1][0]
