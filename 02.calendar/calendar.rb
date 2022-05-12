@@ -27,12 +27,12 @@ puts (month + '月　' + year).center(20)
 puts week.join(' ')
 print '   ' * first_week
 
-num = first_week
+get_sat = first_week
 
 (1..end_month).each do |date|
   print date.to_s.rjust(2) + ' '
-  num += 1
-  print "\n" if num % 7 == 0
+  get_sat += 1
+  print "\n" if get_sat % 7 == 0
 end
 
-print "\n" if num % 7 != 0
+print "\n" if get_sat % 7 != 0
