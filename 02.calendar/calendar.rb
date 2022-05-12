@@ -24,7 +24,7 @@ first_week = Date.new(year.to_i, month.to_i, 1).wday
 number_day = Date.new(year.to_i, month.to_i, -1).day
 
 puts (month + '月　' + year).center(20)
-puts week.join(' ').center(10)
+puts week.join(' ')
 print '   ' * first_week
 
 num = first_week
