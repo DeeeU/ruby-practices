@@ -21,7 +21,7 @@ year = if opt['y'].nil?
        end
 
 first_week = Date.new(year.to_i, month.to_i, 1).wday
-number_day = Date.new(year.to_i, month.to_i, -1).day
+end_month = Date.new(year.to_i, month.to_i, -1).day
 
 puts (month + '月　' + year).center(20)
 puts week.join(' ')
@@ -29,7 +29,7 @@ print '   ' * first_week
 
 num = first_week
 
-(1..number_day).each do |date|
+(1..end_month).each do |date|
   print date.to_s.rjust(2) + ' '
   num += 1
   print "\n" if num % 7 == 0
