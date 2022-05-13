@@ -5,7 +5,6 @@ opt = ARGV.getopts('y:', 'm:')
 
 today = Date.today
 week = %w[日 月 火 水 木 金 土]
-year = opt['y']
 
 # 引数が無い際の処理
 month = if opt['m'].nil?
