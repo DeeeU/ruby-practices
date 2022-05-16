@@ -20,17 +20,11 @@ total = 0
 9.times do |i|
   total += frames[i][0] + frames[i][1]
 
-  if i == 8 && frames[i][0] == 10
+  if frames[i][0] == 10
     total += if frames[i + 1][0] != 10
                frames[i + 1][0] + frames[i + 1][1]
              else
                frames[i + 1][0] + frames[i + 2][0]
-             end
-  elsif frames[i][0] == 10
-    total += if frames[i + 1][0] == 10
-               frames[i + 1][0] + frames[i + 2][0]
-             else
-               frames[i + 1][0] + frames[i + 1][1]
              end
 
   elsif frames[i][0] + frames[i][1] == 10
