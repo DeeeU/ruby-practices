@@ -18,15 +18,15 @@ frames[-1] << 0
 total = 0
 
 9.times do |i|
+  total += frames[i][0] + frames[i][1]
+
   if i == 8 && frames[i][0] == 10
-    total += frames[i][0] + frames[i][1]
     total += if frames[i + 1][0] != 10
                frames[i + 1][0] + frames[i + 1][1]
              else
                frames[i + 1][0] + frames[i + 2][0]
              end
   elsif frames[i][0] == 10
-    total += frames[i][0] + frames[i][1]
     total += if frames[i + 1][0] == 10
                frames[i + 1][0] + frames[i + 2][0]
              else
@@ -34,13 +34,8 @@ total = 0
              end
 
   elsif frames[i][0] + frames[i][1] == 10
-    total += frames[i][0] + frames[i][1] + frames[i + 1][0]
-
-  else
-    total += frames[i][0] + frames[i][1]
+    total += frames[i + 1][0]
   end
 end
 
-# total += frames[9..].flatten.inject(:+)
-# p total
 p [total, frames[9..].flatten].flatten.sum
