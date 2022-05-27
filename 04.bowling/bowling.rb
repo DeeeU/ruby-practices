@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-scores = gets.split(',')
-
+data_input = ARGV[0]
+scores = data_input.split(',')
 shots = []
 scores.each do |s|
   if s.strip == 'X'
