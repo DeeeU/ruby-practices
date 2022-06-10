@@ -8,13 +8,13 @@ week = %w[日 月 火 水 木 金 土]
 
 # 引数が無い際の処理
 month = if opt['m'].nil?
-          today.month.to_s
+          today.month
         else
           opt['m']
         end
 
 year = if opt['y'].nil?
-         today.year.to_s
+         today.year
        else
          opt['y']
        end
@@ -22,7 +22,7 @@ year = if opt['y'].nil?
 first_week = Date.new(year.to_i, month.to_i, 1).wday
 end_month = Date.new(year.to_i, month.to_i, -1).day
 
-puts (month + '月　' + year).center(20)
+puts (month.to_s + '月　' + year.to_s).center(20)
 puts week.join(' ')
 print '   ' * first_week
 
