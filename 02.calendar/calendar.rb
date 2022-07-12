@@ -26,12 +26,12 @@ puts (month.to_s + '月　' + year.to_s).center(20)
 puts week.join(' ')
 print '   ' * first_week
 
-countup_until_sat = first_week
+saturday_decision = first_week
 
 (1..end_month).each do |date|
   print date.to_s.rjust(2) + ' '
-  countup_until_sat += 1
-  print "\n" if countup_until_sat % 7 == 0
+  saturday_decision += 1
+  print "\n" if saturday_decision % 7 == 0
 end
 
-print "\n" if countup_until_sat % 7 != 0
+print "\n" if saturday_decision % 7 != 0
