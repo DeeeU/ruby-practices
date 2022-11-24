@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-def select_hight(arr, width)
+def select_height(arr, width)
   (arr.length / width.to_f).ceil
 end
 
@@ -11,8 +11,8 @@ end
 array = Dir.glob('*/*')
 max_len = how_much_space(array)
 width = 3
-hight = select_hight(array, width)
-field = array.each_slice(hight).to_a
+height = select_height(array, width)
+field = array.each_slice(height).to_a
 
 i = 0
 while i < hight
