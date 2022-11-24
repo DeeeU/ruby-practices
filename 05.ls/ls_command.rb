@@ -8,7 +8,7 @@ def how_much_space(arr)
   arr.max.length
 end
 
-array = Dir.glob('*/*')
+array = Dir.glob('*')
 max_len = how_much_space(array)
 width = 3
 height = select_height(array, width)
