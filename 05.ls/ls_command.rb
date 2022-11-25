@@ -5,9 +5,8 @@ def set_height(files_data, width)
 end
 
 def space(files_data)
-  files_data.max {|a, b| a.to_f <=> b.to_f}.length
+  files_data.max_by { |a, b| a.to_f <=> b.to_f }.length
 end
-
 
 begin
   files = Dir.glob('*')
@@ -16,13 +15,12 @@ begin
   height = set_height(files, width)
   field = files.each_slice(height).to_a
 
-  i = 0
   height.times do |i|
     width.times do |j|
       printf("%-#{max_length * 2}s", field[j][i])
     end
     print("\n")
   end
-rescue => e
+rescue NoMethodError
   exit
 end
