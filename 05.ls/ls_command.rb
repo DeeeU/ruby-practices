@@ -5,7 +5,7 @@ def select_height(arr, width)
 end
 
 def how_much_space(arr)
-  arr.max.length
+  arr.max {|a, b| a.to_f <=> b.to_f}.length
 end
 
 
