@@ -4,14 +4,14 @@ def select_height(arr, width)
   (arr.length / width.to_f).ceil
 end
 
-def how_much_space(arr)
-  arr.max {|a, b| a.to_f <=> b.to_f}.length
+def space(files_data)
+  files_data.max {|a, b| a.to_f <=> b.to_f}.length
 end
 
 
 begin
   files = Dir.glob('*')
-  max_length = how_much_space(files)
+  max_length = space(files)
   width = 3
   height = select_height(files, width)
   field = files.each_slice(height).to_a
