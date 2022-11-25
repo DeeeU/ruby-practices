@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-def select_height(arr, width)
-  (arr.length / width.to_f).ceil
+def set_height(files_data, width)
+  (files_data.length / width.to_f).ceil
 end
 
 def space(files_data)
@@ -13,7 +13,7 @@ begin
   files = Dir.glob('*')
   max_length = space(files)
   width = 3
-  height = select_height(files, width)
+  height = set_height(files, width)
   field = files.each_slice(height).to_a
 
   i = 0
