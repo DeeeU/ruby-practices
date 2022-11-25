@@ -11,7 +11,7 @@ end
 
 begin
   files = Dir.glob('*')
-  max_len = how_much_space(files)
+  max_length = how_much_space(files)
   width = 3
   height = select_height(files, width)
   field = files.each_slice(height).to_a
@@ -19,7 +19,7 @@ begin
   i = 0
   height.times do |i|
     width.times do |j|
-      printf("%-#{max_len * 2}s", field[j][i])
+      printf("%-#{max_length * 2}s", field[j][i])
     end
     print("\n")
   end
