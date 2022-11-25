@@ -8,11 +8,11 @@ def how_much_space(arr)
   arr.max.length
 end
 
-array = Dir.glob('*')
-max_len = how_much_space(array)
+files = Dir.glob('*')
+max_len = how_much_space(files)
 width = 3
-height = select_height(array, width)
-field = array.each_slice(height).to_a
+height = select_height(files, width)
+field = files.each_slice(height).to_a
 
 i = 0
 while i < hight
