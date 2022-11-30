@@ -6,18 +6,18 @@ end
 
 def width(files_data, width)
   if files_data.length < width
-    return files_data.length
+    files_data.length
   else
-    return width
+    width
   end
 end
 
-def space(files_data)
+def max_length(files_data)
   files_data.max_by { |a, b| a.to_f <=> b.to_f }.length
 end
 
-files = Dir.glob('*/*')
-max_length = space(files)
+files = Dir.glob('*')
+max_length = max_length(files)
 width = width(files, 3)
 height = height(files, width)
 field = files.each_slice(height).to_a
