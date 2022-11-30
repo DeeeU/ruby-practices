@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-def set_height(files_data, width)
+def height(files_data, width)
   (files_data.length / width.to_f).ceil
 end
 
@@ -12,7 +12,7 @@ begin
   files = Dir.glob('*')
   max_length = space(files)
   width = 3
-  height = set_height(files, width)
+  height = height(files, width)
   field = files.each_slice(height).to_a
 
   height.times do |i|
