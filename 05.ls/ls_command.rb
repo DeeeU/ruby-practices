@@ -7,6 +7,8 @@ end
 def width(files_data, width)
   if files_data.length < width
     files_data.length
+  elsif files_data.length == 4
+    files_data.length / 2
   else
     width
   end
