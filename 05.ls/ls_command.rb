@@ -13,7 +13,7 @@ def width(files_data, width)
 end
 
 def max_length(files_data)
-  files_data.max_by { |a, b| a.to_f <=> b.to_f }.length
+  files_data.max_by { |i| i.length }.length
 end
 
 files = Dir.glob('*')
