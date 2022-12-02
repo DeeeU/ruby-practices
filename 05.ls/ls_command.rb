@@ -16,7 +16,7 @@ def max_length(files_data)
   files_data.max_by { |i| i.length }.length
 end
 
-files = Dir.glob('*')
+files = Dir.glob('*', File::FNM_DOTMATCH)
 max_length = max_length(files)
 width = width(files, 3)
 height = height(files, width)
