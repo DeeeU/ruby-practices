@@ -7,11 +7,16 @@ end
 def width(files_data, width)
   if files_data.length < width
     files_data.length
-  elsif files_data.length == 4
-    files_data.length / 2
   else
     width
   end
+end
+
+def field(files_data, height, width)
+  (width * height - files_data.length).times do
+    files_data << ' '
+  end
+  files_data.each_slice(height).to_a
 end
 
 def max_length(files_data)
@@ -19,14 +24,13 @@ def max_length(files_data)
 end
 
 files = Dir.glob('*', File::FNM_DOTMATCH)
-max_length = max_length(files)
 width = width(files, 3)
 height = height(files, width)
-field = files.each_slice(height).to_a
+field = field(files, height, width)
 
 height.times do |i|
   width.times do |j|
-    printf("%-#{max_length * 2}s", field[j][i])
+    printf("%-#{max_length(files) * 2}s", field[j][i])
   end
   print("\n")
 end
