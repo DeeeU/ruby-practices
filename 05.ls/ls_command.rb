@@ -20,7 +20,13 @@ def field(files_data, height, width)
 end
 
 def max_length(files_data)
-  files_data.max_by { |i| i.length }.length
+  max_length = 0
+  files_data.each do |i|
+    if max_length < i.length
+      max_length = i.length
+    end
+  end
+  max_length
 end
 
 files = Dir.glob('*', File::FNM_DOTMATCH)
