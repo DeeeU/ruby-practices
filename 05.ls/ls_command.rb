@@ -27,7 +27,15 @@ def max_length(files_data)
   max_length
 end
 
-files = Dir.glob('*', File::FNM_DOTMATCH)
+if ARGV[0] == '-a'
+  files = []
+  Dir.foreach('.'){|f|
+    files <<  f
+  }
+else
+  files = Dir.glob('*')
+end
+
 width = width(files, 3)
 height = height(files, width)
 field = field(files, height, width)
