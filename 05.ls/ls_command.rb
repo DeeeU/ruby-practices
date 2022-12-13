@@ -22,9 +22,7 @@ end
 def max_length(files_data)
   max_length = 0
   files_data.each do |i|
-    if max_length < i.length
-      max_length = i.length
-    end
+    max_length = i.length if max_length < i.length
   end
   max_length
 end
