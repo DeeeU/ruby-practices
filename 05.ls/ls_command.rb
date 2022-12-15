@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'optparse'
+
 def height(files_data, width)
   (files_data.length / width.to_f).ceil
 end
@@ -23,11 +25,12 @@ def max_length(files_data)
   files_data.max_by(&:length).length
 end
 
-if ARGV[0] == '-a'
-  files = Dir.foreach('.').to_a.sort
-else
-  files = Dir.glob('*')
-end
+params = ARGV.getopts('a')
+files = if params['a']
+          Dir.foreach('..').to_a.sort
+        else
+          Dir.glob('*')
+        end
 
 max_length = max_length(files)
 width = width(files, 3)
