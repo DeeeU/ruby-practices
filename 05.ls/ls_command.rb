@@ -27,7 +27,7 @@ end
 
 params = ARGV.getopts('a')
 files = if params['a']
-          Dir.foreach('..').to_a.sort
+          Dir.foreach('.').to_a.sort
         else
           Dir.glob('*')
         end
@@ -35,11 +35,11 @@ files = if params['a']
 max_length = max_length(files)
 width = width(files, 3)
 height = height(files, width)
-field = field(files, height, width)
+sort_files = field(files, height, width)
 
 height.times do |i|
   width.times do |j|
-    printf("%-#{max_length * 2}s", field[j][i])
+    printf("%-#{max_length * 2}s", sort_files[j][i])
   end
   print("\n")
 end
