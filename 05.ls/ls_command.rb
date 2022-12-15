@@ -28,10 +28,7 @@ def max_length(files_data)
 end
 
 if ARGV[0] == '-a'
-  files = []
-  Dir.foreach('.'){|f|
-    files <<  f
-  }
+  files = Dir.foreach('.').to_a
 else
   files = Dir.glob('*')
 end
