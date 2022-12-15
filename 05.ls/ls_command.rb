@@ -20,11 +20,7 @@ def field(files_data, height, width)
 end
 
 def max_length(files_data)
-  max_length = 0
-  files_data.each do |i|
-    max_length = i.length if max_length < i.length
-  end
-  max_length
+  files_data.max_by(&:length).length
 end
 
 if ARGV[0] == '-a'
@@ -33,13 +29,14 @@ else
   files = Dir.glob('*')
 end
 
+max_length = max_length(files)
 width = width(files, 3)
 height = height(files, width)
 field = field(files, height, width)
 
 height.times do |i|
   width.times do |j|
-    printf("%-#{max_length(files) * 2}s", field[j][i])
+    printf("%-#{max_length * 2}s", field[j][i])
   end
   print("\n")
 end
