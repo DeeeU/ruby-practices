@@ -25,9 +25,11 @@ def max_length(files_data)
   files_data.max_by(&:length).length
 end
 
-params = ARGV.getopts('a')
+params = ARGV.getopts('a', 'r')
 files = if params['a']
           Dir.foreach('.').to_a.sort
+        elsif params['r']
+          Dir.glob('*').reverse
         else
           Dir.glob('*')
         end
