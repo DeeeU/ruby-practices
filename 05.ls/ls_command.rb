@@ -39,10 +39,6 @@ def authority(code)
   authority[code]
 end
 
-def add_zero(code)
-  code.split('').unshift(0).join
-end
-
 def height(files_data, width)
   (files_data.length / width.to_f).ceil
 end
@@ -83,12 +79,7 @@ if params['l']
   files.each do |i|
     fs = File::Stat.new(i)
     sum_block += fs.blocks
-    file_info = if fs.mode.to_s(8).length == 5
-                  file_info.push(create_permission(add_zero(fs.mode.to_s(8))))
-                else
-                  file_info.push(create_permission(fs.mode.to_s(8)))
-                end
-
+    file_info << create_permission(fs.mode.to_s(8).rjust(6, '0'))
     file_info << File::Stat.new(i).nlink
     file_info << Etc.getpwuid(fs.uid).name
     file_info << Etc.getgrgid(fs.gid).name
