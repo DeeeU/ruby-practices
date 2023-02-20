@@ -62,7 +62,7 @@ def max_length(files_data)
   files_data.max_by(&:length).length
 end
 
-def show_file(files_data, column_number)
+def max_column_length(files_data, column_number)
   max_number = 0
   files_data.each do |i|
     max_number = i[column_number].length if max_number < i[column_number].length
@@ -92,7 +92,7 @@ if params['l']
     file_info[i] << File::Stat.new(files[i]).size.to_s
     file_info[i] << File::Stat.new(files[i]).mtime.month.to_s
     file_info[i] << File::Stat.new(files[i]).mtime.day.to_s
-    file_info[i] << "#{File::Stat.new(files[i]).mtime.hour}:#{File::Stat.new(files[i]).mtime.min.to_s.rjust(2, '0')}"
+    file_info[i] << "#{File::Stat.new(files[i]).mtime.hour.to_s.rjust(2, '0')}:#{File::Stat.new(files[i]).mtime.min.to_s.rjust(2, '0')}"
     file_info[i] << files[i]
   end
 
@@ -100,7 +100,7 @@ if params['l']
   print("\n")
   file_info.each do |i|
     i.length.times do |j|
-      printf(' %s', i[j].rjust(show_file(file_info, j)))
+      printf('%s ', i[j].rjust(max_column_length(file_info, j)))
     end
     print("\n")
   end
