@@ -73,21 +73,21 @@ files = if params['a']
 
 max_length = max_length(files)
 if params['l']
-  file_info = Array.new(files.length).map{Array.new}
+  file_info = Array.new(files.length).map { [] }
 
   sum_block = 0
   files.length.times do |i|
     fs = File::Stat.new(files[i])
     sum_block += fs.blocks
-      file_info[i] << create_permission(fs.mode.to_s(8).rjust(6, '0'))
-      file_info[i] << File::Stat.new(files[i]).nlink
-      file_info[i] << Etc.getpwuid(fs.uid).name
-      file_info[i] << Etc.getgrgid(fs.gid).name
-      file_info[i] << File::Stat.new(files[i]).size
-      file_info[i] << File::Stat.new(files[i]).mtime.month
-      file_info[i] << File::Stat.new(files[i]).mtime.day
-      file_info[i] << "#{File::Stat.new(files[i]).mtime.hour}:#{File::Stat.new(files[i]).mtime.min.to_s.rjust(2, '0')}"
-      file_info[i] << files[i]
+    file_info[i] << create_permission(fs.mode.to_s(8).rjust(6, '0'))
+    file_info[i] << File::Stat.new(files[i]).nlink
+    file_info[i] << Etc.getpwuid(fs.uid).name
+    file_info[i] << Etc.getgrgid(fs.gid).name
+    file_info[i] << File::Stat.new(files[i]).size
+    file_info[i] << File::Stat.new(files[i]).mtime.month
+    file_info[i] << File::Stat.new(files[i]).mtime.day
+    file_info[i] << "#{File::Stat.new(files[i]).mtime.hour}:#{File::Stat.new(files[i]).mtime.min.to_s.rjust(2, '0')}"
+    file_info[i] << files[i]
   end
 
   printf 'total %d', sum_block
