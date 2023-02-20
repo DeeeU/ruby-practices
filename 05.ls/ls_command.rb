@@ -82,11 +82,9 @@ files = if params['a']
 max_length = max_length(files)
 if params['l']
   file_info = Array.new(files.length).map { [] }
-
-  sum_block = 0
+  sum_block = files.sum { |f| File::Stat.new(f).blocks }
   files.length.times do |i|
     fs = File::Stat.new(files[i])
-    sum_block += fs.blocks
     file_info[i] << create_permission(fs.mode.to_s(8).rjust(6, '0'))
     file_info[i] << File::Stat.new(files[i]).nlink.to_s
     file_info[i] << Etc.getpwuid(fs.uid).name
