@@ -62,7 +62,7 @@ def max_length(files_data)
   files_data.max_by(&:length).length
 end
 
-def max_column_length(files_data, column_number)
+def max_length_of_column(files_data, column_number)
   max_number = 0
   files_data.each do |i|
     max_number = i[column_number].length if max_number < i[column_number].length
@@ -100,7 +100,7 @@ if params['l']
   print("\n")
   file_info.each do |i|
     i.length.times do |j|
-      printf('%s ', i[j].rjust(max_column_length(file_info, j)))
+      printf('%s ', i[j].rjust(max_length_of_column(file_info, j)))
     end
     print("\n")
   end
