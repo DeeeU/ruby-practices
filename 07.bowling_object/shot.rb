@@ -1,20 +1,16 @@
 # frozen_string_literal: true
 
 class Shot
-  def initialize(score)
-    @score = score.split(',')
-  end
-
-  def scores
-    @shots = []
-    @score.each do |s|
-      if s.strip == 'X'
-        @shots << 10
-        @shots << 0
+  def self.translate_x(scores)
+    shots = []
+    scores.split(',').each do |i|
+      if i.strip == 'X'
+        shots << 10
+        shots << 0
       else
-        @shots << s.to_i
+        shots << i.to_i
       end
     end
-    @shots
+    shots
   end
 end
