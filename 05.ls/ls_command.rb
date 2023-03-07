@@ -1,6 +1,43 @@
 # frozen_string_literal: true
 
 require 'optparse'
+require 'etc'
+
+def create_permission(oct_code)
+  permission = ''
+  permission += file_type(oct_code[0..1])
+  3.times do |i|
+    permission += authority(oct_code[i + 3])
+  end
+  permission
+end
+
+def file_type(code)
+  file_type = {
+    '01' => 'p',
+    '02' => 'c',
+    '04' => 'd',
+    '06' => 'b',
+    '10' => '-',
+    '12' => 'l',
+    '14' => 's'
+  }
+  file_type[code]
+end
+
+def authority(code)
+  authority = {
+    '0' => '---',
+    '1' => '--x',
+    '2' => '-w-',
+    '3' => '-wx',
+    '4' => 'r--',
+    '5' => 'r-x',
+    '6' => 'rw-',
+    '7' => 'rwx'
+  }
+  authority[code]
+end
 
 def height(files_data, width)
   (files_data.length / width.to_f).ceil
@@ -25,7 +62,15 @@ def max_length(files_data)
   files_data.max_by(&:length).length
 end
 
-params = ARGV.getopts('a', 'r')
+def max_length_of_column(files_data, column_number)
+  max_number = 0
+  files_data.each do |i|
+    max_number = i[column_number].length if max_number < i[column_number].length
+  end
+  max_number
+end
+
+params = ARGV.getopts('a', 'r', 'l')
 files = if params['a']
           Dir.foreach('.').to_a.sort
         elsif params['r']
@@ -35,13 +80,40 @@ files = if params['a']
         end
 
 max_length = max_length(files)
-width = width(files, 3)
-height = height(files, width)
-sorted_files = field(files, height, width)
-
-height.times do |i|
-  width.times do |j|
-    printf("%-#{max_length * 2}s", sorted_files[j][i])
+if params['l']
+  file_info = Array.new(files.length).map { [] }
+  sum_block = files.sum { |f| File::Stat.new(f).blocks }
+  files.length.times do |i|
+    fs = File::Stat.new(files[i])
+    file_info[i] << create_permission(fs.mode.to_s(8).rjust(6, '0'))
+    file_info[i] << File::Stat.new(files[i]).nlink.to_s
+    file_info[i] << Etc.getpwuid(fs.uid).name
+    file_info[i] << Etc.getgrgid(fs.gid).name
+    file_info[i] << File::Stat.new(files[i]).size.to_s
+    file_info[i] << File::Stat.new(files[i]).mtime.month.to_s
+    file_info[i] << File::Stat.new(files[i]).mtime.day.to_s
+    file_info[i] << "#{File::Stat.new(files[i]).mtime.hour.to_s.rjust(2, '0')}:#{File::Stat.new(files[i]).mtime.min.to_s.rjust(2, '0')}"
+    file_info[i] << files[i]
   end
+
+  printf 'total %d', sum_block
   print("\n")
+  file_info.each do |i|
+    i.length.times do |j|
+      printf('%s ', i[j].rjust(max_length_of_column(file_info, j)))
+    end
+    print("\n")
+  end
+
+else
+  width = width(files, 3)
+  height = height(files, width)
+  sorted_files = field(files, height, width)
+
+  height.times do |i|
+    width.times do |j|
+      printf("%-#{max_length}s ", sorted_files[j][i])
+    end
+    print("\n")
+  end
 end
