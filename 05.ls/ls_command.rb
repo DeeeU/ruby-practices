@@ -70,17 +70,30 @@ def max_length_of_column(files_data, column_number)
   max_number
 end
 
-params = ARGV.getopts('a', 'r', 'l')
-files = if params['a']
-          Dir.foreach('.').to_a.sort
-        elsif params['r']
-          Dir.glob('*').reverse
-        else
-          Dir.glob('*')
-        end
+files_path = Dir.glob('*')
+flag = false
 
+if ARGV.size > 0 && ARGV[0].start_with?('-')
+  sorted_args = ARGV[0][1..-1].split('').sort.join('')
+end
+
+if sorted_args
+  sorted_args.each_char do |i|
+    case i
+    when 'a'
+      files_path = Dir.foreach('.').to_a.sort
+    when 'r'
+      files_path = files_path.reverse
+    when 'l'
+      flag = true
+    end
+  end
+end
+
+files = files_path
 max_length = max_length(files)
-if params['l']
+
+if flag
   file_info = Array.new(files.length).map { [] }
   sum_block = files.sum { |f| File::Stat.new(f).blocks }
   files.length.times do |i|
