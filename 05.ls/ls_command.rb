@@ -70,7 +70,7 @@ def max_length_of_column(files_data, column_number)
   max_number
 end
 
-files_path = Dir.glob('*')
+file_paths = Dir.glob('*')
 flag = false
 
 if ARGV.size > 0 && ARGV[0].start_with?('-')
@@ -81,32 +81,31 @@ if sorted_args
   sorted_args.each_char do |i|
     case i
     when 'a'
-      files_path = Dir.foreach('.').to_a.sort
+      file_paths = Dir.foreach('.').to_a.sort
     when 'r'
-      files_path = files_path.reverse
+      file_paths = file_paths.reverse
     when 'l'
       flag = true
     end
   end
 end
 
-files = files_path
-max_length = max_length(files)
+max_length = max_length(file_paths)
 
 if flag
-  file_info = Array.new(files.length).map { [] }
-  sum_block = files.sum { |f| File::Stat.new(f).blocks }
-  files.length.times do |i|
-    fs = File::Stat.new(files[i])
+  file_info = Array.new(file_paths.length).map { [] }
+  sum_block = file_paths.sum { |f| File::Stat.new(f).blocks }
+  file_paths.length.times do |i|
+    fs = File::Stat.new(file_paths[i])
     file_info[i] << create_permission(fs.mode.to_s(8).rjust(6, '0'))
-    file_info[i] << File::Stat.new(files[i]).nlink.to_s
+    file_info[i] << File::Stat.new(file_paths[i]).nlink.to_s
     file_info[i] << Etc.getpwuid(fs.uid).name
     file_info[i] << Etc.getgrgid(fs.gid).name
-    file_info[i] << File::Stat.new(files[i]).size.to_s
-    file_info[i] << File::Stat.new(files[i]).mtime.month.to_s
-    file_info[i] << File::Stat.new(files[i]).mtime.day.to_s
-    file_info[i] << "#{File::Stat.new(files[i]).mtime.hour.to_s.rjust(2, '0')}:#{File::Stat.new(files[i]).mtime.min.to_s.rjust(2, '0')}"
-    file_info[i] << files[i]
+    file_info[i] << File::Stat.new(file_paths[i]).size.to_s
+    file_info[i] << File::Stat.new(file_paths[i]).mtime.month.to_s
+    file_info[i] << File::Stat.new(file_paths[i]).mtime.day.to_s
+    file_info[i] << "#{File::Stat.new(file_paths[i]).mtime.hour.to_s.rjust(2, '0')}:#{File::Stat.new(file_paths[i]).mtime.min.to_s.rjust(2, '0')}"
+    file_info[i] << file_paths[i]
   end
 
   printf 'total %d', sum_block
@@ -119,9 +118,9 @@ if flag
   end
 
 else
-  width = width(files, 3)
-  height = height(files, width)
-  sorted_files = field(files, height, width)
+  width = width(file_paths, 3)
+  height = height(file_paths, width)
+  sorted_files = field(file_paths, height, width)
 
   height.times do |i|
     width.times do |j|
