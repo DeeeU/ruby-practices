@@ -71,7 +71,7 @@ def max_length_of_column(files_data, column_number)
 end
 
 file_paths = Dir.glob('*')
-flag = false
+argument_l = false
 
 if ARGV.size > 0 && ARGV[0].start_with?('-')
   sorted_args = ARGV[0][1..-1].split('').sort.join('')
@@ -85,14 +85,14 @@ if sorted_args
     when 'r'
       file_paths = file_paths.reverse
     when 'l'
-      flag = true
+      argument_l = true
     end
   end
 end
 
 max_length = max_length(file_paths)
 
-if flag
+if argument_l
   file_info = Array.new(file_paths.length).map { [] }
   sum_block = file_paths.sum { |f| File::Stat.new(f).blocks }
   file_paths.length.times do |i|
