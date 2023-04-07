@@ -70,16 +70,20 @@ def max_length_of_column(files_data, column_number)
   max_number
 end
 
-params = ARGV.getopts('a', 'r', 'l')
-files = if params['a']
-          Dir.foreach('.').to_a.sort
-        elsif params['r']
-          Dir.glob('*').reverse
-        else
-          Dir.glob('*')
-        end
+params = ARGV.getopts('arl')
+
+files = Dir.glob('*')
+
+if params['a']
+  files = Dir.foreach('.').to_a.sort
+end
+
+if params['r']
+  files = files.reverse
+end
 
 max_length = max_length(files)
+
 if params['l']
   file_info = Array.new(files.length).map { [] }
   sum_block = files.sum { |f| File::Stat.new(f).blocks }
