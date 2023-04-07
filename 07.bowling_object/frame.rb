@@ -3,7 +3,7 @@
 require_relative 'shot'
 
 class Frame
-  attr_accessor :first, :second, :third
+  attr_reader :first, :second, :third
 
   def initialize(first, second = nil, third = nil)
     @first = Shot.new(first).convert_strike_score.to_i
