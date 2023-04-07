@@ -3,15 +3,23 @@
 require_relative 'shot'
 
 class Frame
-  attr_accessor :score
+  attr_accessor :first, :second, :third
 
-  def initialize(score)
-    @score = Shot.new(score).translate_x
+  def initialize(first, second = nil, third = nil)
+    @first = Shot.new(first).convert_strike_score.to_i
+    @second = Shot.new(second).convert_strike_score.to_i
+    @third = Shot.new(third).convert_strike_score.to_i
   end
 
-  def arrangement_score
-    frames = @score.each_slice(2).to_a
-    frames[-1] << 0
-    frames
+  def strike?
+    @third.zero? && @first == 10
+  end
+
+  def spare?
+    @third.zero? && @first < 10 && @first + @second == 10
+  end
+
+  def sum_score
+    @first + @second + @third
   end
 end
