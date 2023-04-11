@@ -6,20 +6,20 @@ class Frame
   attr_reader :first, :second, :third
 
   def initialize(first, second = nil, third = nil)
-    @first = Shot.new(first).convert_strike_score.to_i
-    @second = Shot.new(second).convert_strike_score.to_i
-    @third = Shot.new(third).convert_strike_score.to_i
+    @first = Shot.new(first)
+    @second = Shot.new(second)
+    @third = Shot.new(third)
   end
 
   def strike?
-    @third.zero? && @first == 10
+    @first.score == 10
   end
 
   def spare?
-    @third.zero? && @first < 10 && @first + @second == 10
+    @first.score < 10 && @first.score + @second.score == 10
   end
 
   def sum_score
-    @first + @second + @third
+    @first.score + @second.score + @third.score
   end
 end
