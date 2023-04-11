@@ -2,15 +2,15 @@
 
 class Shot
 
-  def initialize(score)
-    @score = score
+  def initialize(original_score)
+    @original_score = original_score
   end
 
-  def shot
-    if @score == 'X'
+  def score
+    if @original_score == 'X'
       10
     else
-      @score.to_i
+      @original_score.to_i
     end
   end
 end
